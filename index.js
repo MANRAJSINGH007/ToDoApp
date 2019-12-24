@@ -18,7 +18,6 @@ app.get('/', function(req, res) {
 
 app.get('/removetask/', function(req, res) {
 
-    console.log(req.query);
     let item = req.query.currItem;
     let taskIndex = tasks.findIndex(task => task.item == item);
     if(taskIndex != -1){
