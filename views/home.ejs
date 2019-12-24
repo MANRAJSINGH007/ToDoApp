@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    </head>
+    <body>
+        <h1>The home page</h1>
+        <form method="POST" action="/addTask">
+            <input type="text" name="item" required>
+            <input type="date" name="dateOfCreation" required>
+            <button type="submit">Add a Task</button>
+        </form>
+        <ul>
+            <% for(let task of tasks) { %>
+                <li>
+                    <%=task.item %>
+                    <%=task.dateOfCreation %>
+                    <div>
+                        <a href="/removetask/?currItem=<%task.item%>">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </li>
+            <% } %>
+        </ul>
+    </body>
+</html>
