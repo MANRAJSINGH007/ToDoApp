@@ -12,7 +12,7 @@ const taskSchema = new mongoose.Schema({
     }
 });
 
-// Create a collection named Contact in the database which models the schema above(contactSchema)
+// Create a collection named Task in the database which models the schema above(taskSchema)
 const Task = mongoose.model('Task', taskSchema);
 
 //export the collection
