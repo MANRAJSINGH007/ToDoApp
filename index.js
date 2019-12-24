@@ -7,28 +7,47 @@ app.set('views', './views');
 app.use(express.urlencoded());
 app.use(express.static('assets'));
 
-var tasks = [];
+const db = require('./config/mongoose');
+const Task = require('./models/tasks');
 
 app.get('/', function(req, res) {
-    return res.render('home', {
-        title: "ToDoApp",
-        tasks: tasks
+    Task.find({}, function(err, tasks){
+        if(err){
+            console.log('error in fetching tasks from db');
+            return;
+        } else{
+            res.render('home', {
+                title: 'My Tasks',
+                tasks: tasks
+            });
+        }
     });
 });
 
 app.get('/removetask/', function(req, res) {
-
-    let item = req.query.currItem;
-    let taskIndex = tasks.findIndex(task => task.item == item);
-    if(taskIndex != -1){
-        tasks.splice(taskIndex, 1);
-    }
-    return res.redirect('back');
+    let id = req.query.id;
+    Task.findByIdAndDelete(id, function(err){
+        if(err){
+            console.log('Error in removing the task from database');
+            return ;
+        }
+        return res.redirect('back');
+    });
 })
 
 app.post('/addTask', function(req, res) {
-    tasks.push(req.body);
-    return res.redirect('back');
+    Task.create({
+        item: req.body.item,
+        dateOfCreation: req.body.dateOfCreation
+    }, function(err, newTask){
+        if(err){
+            console.log('Error in creating a task');
+            return;
+        } else{
+            console.log('New Task has been created: ', newTask);
+            return res.redirect('back');
+        }
+    })
 })
 
 app.listen(port, function(err) {
