@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 //Connect the ODM to the mongoDB database
-mongoose.connect('mongodb://localhost/to_do_app_db');
+mongoose.connect('mongodb://localhost/todo_app_db');
 
 //Verify the connection to the database
 const db = mongoose.connection;
